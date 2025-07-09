@@ -4,10 +4,10 @@ import './CardsGrid.css'
 
 function shuffleArray(array) {
   console.log(array);
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
 
 export default function CardsGrid(props) {
@@ -31,26 +31,30 @@ export default function CardsGrid(props) {
       </div>
     )
   })
+  console.log(cardData);
 
   const [cardsArray, setCardsArray] = useState(cardData);
+
   console.log(cardsArray);
-  let cardsElements = renderCardElements(cardsArray);
   
   useEffect(() => {
-    cardsElements = renderCardElements(cardsArray);
-
-  }, [cardsArray])
-
+    if (props.cardsData && props.cardsData.length > 0) {
+      setCardsArray([...props.cardsData]);
+    }
+  }, [props.cardsData]);
+  
+  let cardsElements = renderCardElements(cardsArray);
 
   let clickedCardIds = [];
 
   const shuffleCards = () => {
-    shuffleArray(cardData);
-    console.log(cardData);
-    setCardsArray(cardData);
+    const arrayCopy = [...cardData];
+    shuffleArray(arrayCopy);
+    console.log(arrayCopy);
+    setCardsArray(arrayCopy);
   }
 
-  const handleCardClick = (cardId) => {}
+  const handleCardClick = (cardId) => { }
 
   return (
     <>

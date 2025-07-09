@@ -12,7 +12,10 @@ function App() {
 
   const [score, setScore] = useState(0);
   const [maxScore, setMaxScore] = useState(0);
+
   const [pokemonArray, setPokemonArray] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const DIFFICULTY = {
     EASY: 12,
@@ -39,49 +42,45 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(API_URL);
-      
-      if (response.ok === false) {
-        console.error('API call failed')
-      }
-  
-      const data = await response.json();
-      
-      const parsePokemonData = (data) => {
-        let pokemonArray = [];
-        data.map(async (item) => {
-          const response = await fetch(item.url);
-          if (!response.ok) {
-            console.error("API call for pokemon data failed for pokemon ")
-          }
-          const data = await response.json();
+      try {
+        const response = await fetch(API_URL);
 
-          let name = data.name.substring(0, 1).toUpperCase() + data.name.substring(1);
+        if (!response.ok) {
+          console.error('API call failed')
+          return;
+        }
+
+        const data = await response.json();
+
+        const detailedPokemonArray = await Promise.all(data.results.map(async (item) => {
+          const res = await fetch(item.url);
+          if (!res.ok) {
+            console.error(`Failed to fetch details for ${item.name}`)
+            return null;
+          }
+
+          const data = await res.json();
+
+          let name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
           const id = data.id;
           const pictureUrl = data.sprites.front_default;
           const baseExperience = data.base_experience;
           const height = data.height;
           const weight = data.weight;
 
-          const pokemon = new PokemonCardData(id, name, pictureUrl, baseExperience, height, weight);
-          pokemonArray.push(pokemon);
-        })
-        setPokemonArray(pokemonArray)
+          return new PokemonCardData(id, name, pictureUrl, baseExperience, height, weight);
+
+        }));
+
+        // Filter out nulls (in case some fetches failed)
+        setPokemonArray(detailedPokemonArray.filter(Boolean));
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Something went wrong:', error);
       }
-  
-      parsePokemonData(data.results);
-    }
-
+    };
     fetchData();
-  }, [])
-
-
-
-  const cardsData = [
-    new PokemonCardData(0, 'Pikachu', 'image.png', 22, 12, 3),
-    new PokemonCardData(1, 'Bulbasaur', 'image.png', 10, 1, 3),
-  ]
-
+  }, []);
 
 
   return (
@@ -90,7 +89,7 @@ function App() {
       <div className="main-container">
 
         <header className="container">
-          <h1 className="title">Pokemon Memory Card Game</h1>          
+          <h1 className="title">Pokemon Memory Card Game</h1>
           <div className="header-description">
             <p>Click on cards, but try not to click on the same card twice 😅</p>
           </div>
@@ -101,7 +100,7 @@ function App() {
         </div>
 
         <div className="cards-container container">
-          <CardsGrid updateScore={updateScore} resetScore={resetScore} updateMaxScore={updateMaxScore} cardsData={pokemonArray}/>
+          {isLoading ? <p>Loading cards...</p> : <CardsGrid updateScore={updateScore} resetScore={resetScore} updateMaxScore={updateMaxScore} cardsData={pokemonArray} />}
         </div>
 
       </div>
