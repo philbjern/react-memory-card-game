@@ -30,6 +30,8 @@
   --clr-surface-tonal-a50: #909690;
 
   --max-width: 1216px;
+
+  --grid-width: 304px;
 }
 
 body {
@@ -41,12 +43,16 @@ body {
   align-items: center;
 }
 
-.container {
+.main-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   max-width: var(--max-width);
   min-width: var(--max-width);
+}
+
+.container {
+  margin: 1.5rem;
 }
 
 .title {

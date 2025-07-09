@@ -1,7 +1,7 @@
 export default function ScoreBoard(props) {
   return (
     <>
-      ScoreBoard
+      ScoreBoard: score {props.score}, maxScore: {props.maxScore}
     </>
   )
 }

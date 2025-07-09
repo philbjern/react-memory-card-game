@@ -1,0 +1,34 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, var(--grid-width));
+}
+
+.card {
+  min-height: 304px;
+  margin: 0.8rem;
+  cursor: pointer;
+}
+
+.card-title {
+  font-size: 2rem;
+}
+
+.card .picture {
+  width: 100%;
+  background: var(--clr-surface-a10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  min-height: var(--grid-width);
+}
+
+.card .picture img {
+  min-width: var(--grid-width);
+  border-radius: 50%;
+}
+
+.card .stats p{
+  line-height: 1.2rem;
+  margin: 0.3rem 0;
+}
