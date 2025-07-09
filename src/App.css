@@ -32,6 +32,7 @@
   --max-width: 1216px;
   --target-card-opacity: 0.7;
   --grid-width: 304px;
+  --border-radius-main: 12px;
 }
 
 body {
@@ -54,6 +55,14 @@ body {
 
 .container {
   margin: 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1 0 auto;
 }
 
 .title {
@@ -84,12 +93,29 @@ body {
   transform: translateY(-2px)
 }
 
+.controls button.muted {
+  margin: 0 0.3rem;
+  background: transparent;
+  border: 2px solid var(--clr-primary-a30);
+  color: var(--clr-primary-a30);
+  transition: all 200ms ease-out;
+}
+
+.controls button.muted:hover {
+  background: var(--clr-primary-a0);
+  color: var(--clr-dark-a0);
+  border: 2px solid var(--clr-primary-a0);
+  transform: translateY(-2px)
+}
+
+
 .score-board {
   background-color: var(--clr-surface-a10);
   padding: 1.8rem;
   margin: 0.8rem;
   border-radius: 12px;
   font-size: 0.9rem;
+  min-width: 200px;
   display: flex;
   align-items: center;
   justify-content: flex-start;

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import ScoreBoard from './components/ScoreBoard.jsx'
 import CardsGrid from './components/CardsGrid.jsx'
+import GameOverPopUp from './components/GameOverPopUp.jsx'
 
 import PokemonCardData from './components/model/PokemonCardData.js'
 
@@ -13,6 +14,8 @@ function App() {
   const [maxScore, setMaxScore] = useState(0);
   const [pokemonArray, setPokemonArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [scoreForGameOverPopup, setScoreForGameoverPopup] = useState(0);
 
   const DIFFICULTY = {
     EASY: 12,
@@ -27,6 +30,8 @@ function App() {
   }
 
   const resetScore = () => {
+    setScoreForGameoverPopup(score);
+    setIsGameOver(true);
     setScore(0);
   }
 
@@ -80,19 +85,20 @@ function App() {
 
   return (
     <>
-
       <div className="main-container">
 
-        <header className="container">
-          <h1 className="title">Pokémon Memory Card Game</h1>
-          <div className="header-description">
-            <p>Click on cards, but try not to click on the same card twice - it's game over then <span className="emoji spin">😅</span></p>
+        <header className="container flex">
+          <div className="flex-1">
+            <h1 className="title">Pokémon Memory Card Game</h1>
+            <div className="header-description">
+              <p>Click on cards, but try not to click on the same card twice - it's game over then <span className="emoji spin">😅</span></p>
+            </div>
+          </div>
+          <div className="score-board container">
+            <ScoreBoard score={score} maxScore={maxScore} />
           </div>
         </header>
 
-        <div className="score-board container">
-          <ScoreBoard score={score} maxScore={maxScore} />
-        </div>
 
         <div className="cards-container container">
           {isLoading ? <p>Loading cards...</p> : <CardsGrid updateScore={updateScore} resetScore={resetScore} updateMaxScore={updateMaxScore} cardsData={pokemonArray} />}
@@ -103,6 +109,8 @@ function App() {
       <footer>
         Created by <a href="https://github.com/philbjern"><strong>philbjern</strong></a> 2025
       </footer>
+
+      {isGameOver ? <GameOverPopUp resetIsGameOver={() => setIsGameOver(false)} score={scoreForGameOverPopup}/> : null}
 
     </>
   )

@@ -1,0 +1,43 @@
+.game-over-popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(18, 18, 18, 0.8);
+  z-index: 10;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-over-popup.animate {
+  animation: 500ms ease-out slide-up;
+}
+
+.game-over-popup {
+  background: var(--clr-surface-a10);
+  padding: 4rem;
+  border-radius: var(--border-radius-main);
+  min-width: 50vw;
+  text-align: center;
+}
+
+.game-over-popup h1 {
+  margin: 0;
+  font-size: 2.1rem;
+}
+
+.game-over-popup p {
+  margin-bottom: 1.5rem;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(50px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
