@@ -1,7 +1,9 @@
 export default function ScoreBoard(props) {
   return (
-    <>
-      ScoreBoard: score {props.score}, maxScore: {props.maxScore}
-    </>
+    <div>
+      <b>Score Board</b>
+      <p>Current Score: <strong className="color-primary">{props.score}</strong></p>
+      <p>Max Score: <strong className="color-primary">{props.maxScore}</strong></p>
+    </div>
   )
 }

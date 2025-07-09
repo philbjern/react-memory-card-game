@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import ScoreBoard from './components/ScoreBoard.jsx'
 import CardsGrid from './components/CardsGrid.jsx'
@@ -12,9 +11,7 @@ function App() {
 
   const [score, setScore] = useState(0);
   const [maxScore, setMaxScore] = useState(0);
-
   const [pokemonArray, setPokemonArray] = useState([]);
-
   const [isLoading, setIsLoading] = useState(true);
 
   const DIFFICULTY = {
@@ -31,11 +28,11 @@ function App() {
 
   const resetScore = () => {
     setScore(0);
-    setMaxScore(0);
   }
 
   const updateMaxScore = () => {
     if (score > maxScore) {
+      console.log('updating max score, ', score);
       setMaxScore(score);
     }
   }
@@ -69,7 +66,6 @@ function App() {
           const weight = data.weight;
 
           return new PokemonCardData(id, name, pictureUrl, baseExperience, height, weight);
-
         }));
 
         // Filter out nulls (in case some fetches failed)
@@ -82,16 +78,15 @@ function App() {
     fetchData();
   }, []);
 
-
   return (
     <>
 
       <div className="main-container">
 
         <header className="container">
-          <h1 className="title">Pokemon Memory Card Game</h1>
+          <h1 className="title">Pokémon Memory Card Game</h1>
           <div className="header-description">
-            <p>Click on cards, but try not to click on the same card twice 😅</p>
+            <p>Click on cards, but try not to click on the same card twice - it's game over then <span className="emoji spin">😅</span></p>
           </div>
         </header>
 
@@ -104,6 +99,10 @@ function App() {
         </div>
 
       </div>
+
+      <footer>
+        Created by <a href="https://github.com/philbjern"><strong>philbjern</strong></a> 2025
+      </footer>
 
     </>
   )

@@ -1,16 +1,26 @@
 .cards {
   display: grid;
   grid-template-columns: repeat(4, var(--grid-width));
+  transform: translateX(-1.6rem);
 }
 
 .card {
   min-height: 304px;
   margin: 0.8rem;
   cursor: pointer;
+  opacity: var( --target-card-opacity);
+  transition: all 200ms ease-out;
+  animation: 0.7s ease-out fade-in;
+}
+
+.card:hover {
+  transform: scale(1.1) translate(-2px, -2px);
+  opacity: 1;
 }
 
 .card-title {
   font-size: 2rem;
+  color: var(--clr-primary-a50);
 }
 
 .card .picture {
@@ -31,4 +41,15 @@
 .card .stats p{
   line-height: 1.2rem;
   margin: 0.3rem 0;
+  color: var(--clr-surface-a50)
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: var(--target-card-opacity);
+  }
 }
