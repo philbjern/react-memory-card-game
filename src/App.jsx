@@ -23,7 +23,15 @@ function App() {
     HARD: 30
   }
 
-  const API_URL = `https://pokeapi.co/api/v2/pokemon?limit=${DIFFICULTY.EASY}`
+  let difficulty = DIFFICULTY.EASY;
+
+  const calculateApiOffset = () => {
+    return Math.floor(Math.random() * (1302 - difficulty));
+  }
+
+  let offset = calculateApiOffset();
+
+  const API_URL = `https://pokeapi.co/api/v2/pokemon?limit=${difficulty}&offset=${offset}`
 
   const updateScore = () => {
     setScore(score + 1)
@@ -33,6 +41,7 @@ function App() {
     setScoreForGameoverPopup(score);
     setIsGameOver(true);
     setScore(0);
+    offset = calculateApiOffset();
   }
 
   const updateMaxScore = () => {
@@ -101,7 +110,7 @@ function App() {
 
 
         <div className="cards-container container">
-          {isLoading ? <p>Loading cards...</p> : <CardsGrid updateScore={updateScore} resetScore={resetScore} updateMaxScore={updateMaxScore} cardsData={pokemonArray} />}
+          {isLoading ? <p>Loading cards... <span className="loading-spinner">⚙️</span></p> : <CardsGrid updateScore={updateScore} resetScore={resetScore} updateMaxScore={updateMaxScore} cardsData={pokemonArray} />}
         </div>
 
       </div>
