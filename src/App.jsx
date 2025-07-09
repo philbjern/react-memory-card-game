@@ -1,33 +1,44 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import ScoreBoard from './components/ScoreBoard.jsx'
+import CardsGrid from './components/CardsGrid.jsx'
+
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [score, setScore] = useState(0);
+  const [maxScore, setMaxScore] = useState(0);
+
+  const DIFFICULTY = {
+    EASY: 10,
+    MEDIUM: 20,
+    HARD: 30
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+      <div className="container">
+
+        <header>
+          <h1 className="title">Pokemon Memory Card Game</h1>          
+          <div className="header-description">
+            <p>Click on cards, but try not to click on the same card twice 😅</p>
+          </div>
+        </header>
+
+        <div className="score-board">
+          <ScoreBoard />
+        </div>
+
+        <div className="cards-container">
+          <CardsGrid />
+        </div>
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
